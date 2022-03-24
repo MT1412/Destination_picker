@@ -7,8 +7,8 @@ import Application.Helper.Controller
 
 instance Controller StaticController where
     action WelcomeAction = render WelcomeView
+
     action CalculateAction = do
         let windDirection :: Int = param "numberinput"
-        -- let speedFactor = speedFactorSection windDirection
-        let value :: Int = windDirection * tempvalue
+        let value :: Int = output windDirection
         render CalculateView {value}
