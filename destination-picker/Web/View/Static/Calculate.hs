@@ -7,7 +7,7 @@ instance View CalculateView where
     html CalculateView {value}= [hsx|
         <div>
             <p>
-            Hi there, this is your current speed factor:
+            Hi there, this is your current time estimate in hours:
             </p>
             <div>
                 {value}
