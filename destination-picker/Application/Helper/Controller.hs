@@ -1,7 +1,6 @@
 module Application.Helper.Controller where
 
 import IHP.ControllerPrelude
-import Application.Domain.CourseCalc
 -- Here you can add functions which are available in all your controllers
 
 heading :: Int = 270
@@ -12,15 +11,15 @@ absdifference winddirMinHeading =
 
 getcourse absdifference = if absdifference > 180 then (subtract absdifference) 360 else absdifference
 
+-- maybe replace numbers by global constants
 matchspeedfactor course =
-    if course < 30 then 5 --0.5
+    if course < 30 then 0.5
     else if course > 50 
-        then 10 --1.0 
-        else 8 --0.8
+        then 1.0
+        else 0.8
 
--- output winddir = matchspeedfactor (getcourse winddir)
 output winddir = do
-    let x :: Int = winddirMinHeading winddir heading
-    let y :: Int = absdifference x
-    let z :: Int = getcourse y
-    matchspeedfactor z
+    let difference :: Int = winddirMinHeading winddir heading
+    let absdiff :: Int = absdifference difference
+    let course :: Int = getcourse absdiff
+    matchspeedfactor course

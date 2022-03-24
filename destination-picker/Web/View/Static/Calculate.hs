@@ -1,13 +1,13 @@
 module Web.View.Static.Calculate where
 import Web.View.Prelude
 
-data CalculateView = CalculateView {value :: Int}
+data CalculateView = CalculateView {value :: Float}
 
 instance View CalculateView where
     html CalculateView {value}= [hsx|
         <div>
             <p>
-            Hi there, this is your current speed
+            Hi there, this is your current speed factor:
             </p>
             <div>
                 {value}
