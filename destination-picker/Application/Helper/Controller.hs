@@ -5,9 +5,9 @@ import IHP.ControllerPrelude
 
 type Route = [Section]
 type Section = (String, Float, Int)
--- getDistanceKM :: Section -> Float
+getDistanceKM :: Section -> Float
 getDistanceKM (_, distanceKM, _) = distanceKM
--- getHeading :: Section -> Int
+getHeading :: Section -> Int
 getHeading (_, _, heading) = heading
 
 ih1 :: Section
@@ -46,7 +46,7 @@ getSpeed winddir heading = do
     let course :: Int = getcourse absdiff
     matchspeed course
 
--- calcSectionTime :: Int -> Section -> Float
+calcSectionTime :: Int -> Section -> Float
 calcSectionTime winddirection section = do
     let heading :: Int = getHeading section
     let speed :: Float = getSpeed winddirection heading
