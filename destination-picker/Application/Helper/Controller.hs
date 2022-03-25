@@ -41,17 +41,17 @@ matchspeed course = -- speed currently
         else 5.0 --0.8
 
 getSpeed winddir heading = do
-    let difference :: Int = winddirMinHeading winddir heading
-    let absdiff :: Int = absdifference difference
-    let course :: Int = getcourse absdiff
+    let difference = winddirMinHeading winddir heading
+    let absdiff = absdifference difference
+    let course = getcourse absdiff
     matchspeed course
 
 calcSectionTime :: Int -> Section -> Float
 calcSectionTime winddirection section = do
-    let heading :: Int = getHeading section
-    let speed :: Float = getSpeed winddirection heading
-    let distance :: Float = getDistanceKM section
-    let time :: Float = (/speed) distance
+    let heading = getHeading section
+    let speed = getSpeed winddirection heading
+    let distance = getDistanceKM section
+    let time = (/speed) distance
     time
 
 -- routeTimes :: [Section] -> [Float]
