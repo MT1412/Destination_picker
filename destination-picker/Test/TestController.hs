@@ -65,6 +65,7 @@ checkOutput :: Test
 checkOutput =
     TestCase $ assertEqual [] 0.88333327 (output 65)
 
+-- test data
 testSection1 :: Section
 testSection1 = ("firstSection", 1.200, 342)
 testSection2 :: Section
