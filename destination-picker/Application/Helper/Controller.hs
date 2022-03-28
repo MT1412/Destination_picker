@@ -24,7 +24,8 @@ wo1 = ("Woudsend", 0.130, 195)
 routeWoudsend :: Route
 routeWoudsend = [ih1, kv1, we1, we2, wo1]
 
--- route reverse??
+routeDummy :: Route
+routeDummy = [ih1, kv1]
 
 winddirMinHeading winddir heading = (subtract heading) winddir
 
@@ -61,4 +62,9 @@ routeTimes route winddir = map callSectionTime route where
 -- sumRouteTime :: [Float] -> Float
 sumRouteTime routeTimes = sum routeTimes
 
+woudsendTime winddir = sumRouteTime (routeTimes routeWoudsend winddir)
+dummyTime winddir = sumRouteTime (routeTimes routeDummy winddir)
+
 output winddir = sumRouteTime (routeTimes routeWoudsend winddir)
+
+-- run output for all routes --> list of all routes --> map
