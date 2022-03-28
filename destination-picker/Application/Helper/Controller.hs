@@ -27,6 +27,9 @@ routeWoudsend = [ih1, kv1, we1, we2, wo1]
 routeDummy :: Route
 routeDummy = [ih1, kv1]
 
+allRoutes :: [Route]
+allRoutes = [routeWoudsend, routeDummy]
+
 winddirMinHeading :: Int -> Int -> Int
 winddirMinHeading winddir heading = (subtract heading) winddir
 
@@ -67,14 +70,14 @@ routeTimes route winddir = map callSectionTime route where
 sumRouteTime :: [Float] -> Float
 sumRouteTime routeTimes = sum routeTimes
 
--- output :: Int -> Float
--- output winddir = sumRouteTime (routeTimes routeWoudsend winddir)
-allRoutes :: [Route]
-allRoutes = [routeWoudsend, routeDummy]
--- run output for all routes --> list of all routes --> map
 output :: Int -> [Float]
 output winddir= map timeEstimate allRoutes where
     timeEstimate route = sumRouteTime (routeTimes route winddir)
+
+reverseOutput :: Int -> [Float]
+reverseOutput winddir = if winddir > 180 then output ((subtract 180) winddir) else output ((+180) winddir)
+
+-- reverse output --> run output again with opposite winddirection
 
 -- woudsendTime winddir = sumRouteTime (routeTimes routeWoudsend winddir)
 -- dummyTime winddir = sumRouteTime (routeTimes routeDummy winddir)
