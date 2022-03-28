@@ -76,8 +76,3 @@ output winddir= map timeEstimate allRoutes where
 
 reverseOutput :: Int -> [Float]
 reverseOutput winddir = if winddir > 180 then output ((subtract 180) winddir) else output ((+180) winddir)
-
--- reverse output --> run output again with opposite winddirection
-
--- woudsendTime winddir = sumRouteTime (routeTimes routeWoudsend winddir)
--- dummyTime winddir = sumRouteTime (routeTimes routeDummy winddir)
