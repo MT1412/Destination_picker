@@ -1,19 +1,16 @@
 module Web.View.Static.Calculate where
 import Web.View.Prelude
 
-data CalculateView = CalculateView {woudsend :: Float, dummy :: Float}
+data CalculateView = CalculateView {values :: [Float]}
 
 instance View CalculateView where
-    html CalculateView {woudsend, dummy}= [hsx|
+    html CalculateView {values}= [hsx|
         <div>
             <p>
             Hi there, this is your current time estimates in hours:
             </p>
             <div>
-                Woudsend: {woudsend}
-            </div>
-            <div>
-                dummy: {dummy}
+                {values}
             </div>
         </div>
 |]
