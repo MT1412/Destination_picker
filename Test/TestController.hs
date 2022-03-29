@@ -1,7 +1,7 @@
 module Test.TestController where
 
 import Test.HUnit
-    ( assertEqual, runTestTT, Counts, Test(TestList, TestCase) )
+    ( assertEqual, runTestTTAndExit, Counts, Test(TestList, TestCase) )
 import Application.Helper.Controller
 
 -- TODO add invalid input tests
@@ -73,8 +73,8 @@ testSection2 = ("secondSection", 2.400, 220)
 testRoute :: Route
 testRoute = [testSection1, testSection2]
 
-main :: IO Counts
-main = runTestTT $ TestList [
+main :: IO ()
+main = runTestTTAndExit $ TestList [
     checkdifference,
     checkabsdifferenceNegative,
     checkabsdifferencePositive,
