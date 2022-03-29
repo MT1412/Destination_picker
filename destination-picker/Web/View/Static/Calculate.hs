@@ -1,16 +1,20 @@
 module Web.View.Static.Calculate where
 import Web.View.Prelude
 
-data CalculateView = CalculateView {value :: Float}
+data CalculateView = CalculateView {wayThereValues :: [Float], wayBackValues :: [Float]}
 
 instance View CalculateView where
-    html CalculateView {value}= [hsx|
+    html CalculateView {wayThereValues, wayBackValues}= [hsx|
         <div>
             <p>
-            Hi there, this is your current time estimate in hours:
+            Hi there, these are your current time estimates in hours:
+            [routeWoudsend, routeSloten, routeLangweer, routeJoure, routeSneek, routeHeeg]
             </p>
             <div>
-                {value}
+                The time estimates for all routes to get to the destination: {wayThereValues}
+            </div>
+            <div>
+                The time estimates for all routes to get back: {wayBackValues}
             </div>
         </div>
 |]

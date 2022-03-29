@@ -10,5 +10,6 @@ instance Controller StaticController where
 
     action CalculateAction = do
         let windDirection :: Int = param "numberinput"
-        let value :: Float = output windDirection
-        render CalculateView {value}
+        let wayThereValues :: [Float] = output windDirection
+        let wayBackValues :: [Float] = reverseOutput windDirection
+        render CalculateView {wayThereValues, wayBackValues}
