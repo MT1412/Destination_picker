@@ -12,7 +12,7 @@ dist
 *.dyn_o
 *.hi
 *.o
-build
+build/
 gen
 del
 static/prod.*

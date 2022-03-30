@@ -7,7 +7,7 @@ instance View CalculateView where
     html CalculateView {wayThereValues, wayBackValues}= [hsx|
         <div>
             <p>
-            Hi there, these are your current time estimates in hours:
+            Hi, these are your current time estimates in hours:
             [routeWoudsend, routeSloten, routeLangweer, routeJoure, routeSneek, routeHeeg]
             </p>
             <div>
