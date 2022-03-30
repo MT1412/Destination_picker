@@ -63,8 +63,7 @@ calcWayBackTime winddir route = if winddir > 180
     then calcWayThereTime ((subtract 180) winddir) route 
     else calcWayThereTime ((+180) winddir) route
 
-type CalculatedRoute = (String, Float, Float, Float, Float) -- routename, waytheretime, waybacktime, totaltime, lunchtime
-
+type CalculatedRoute = (String, Float, Float, Float, Float)
 testStuff :: Int -> [CalculatedRoute]
 testStuff winddir = map calculateRoutes allRouteData where
     calculateRoutes routeData = do

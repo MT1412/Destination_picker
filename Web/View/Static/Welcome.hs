@@ -8,7 +8,7 @@ instance View WelcomeView where
          <div class="welcomeContent">
                   <form method="GET" action="/CalculateAction">
                       <label for="numberinput">Enter the expected wind direction (0 - 360):</label><br/>
-                      <input type="number" id="numberinput" name="numberinput"><br><br>
+                      <input type="number" id="winddirection" name="winddirection"><br><br>
                       <input type="submit" id="submitbutton" value="Submit">
                   </form>
          </div>

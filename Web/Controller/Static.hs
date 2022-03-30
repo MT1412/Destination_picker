@@ -9,6 +9,6 @@ instance Controller StaticController where
     action WelcomeAction = render WelcomeView
 
     action CalculateAction = do
-        let windDirection :: Int = param "numberinput"
+        let windDirection :: Int = param "winddirection"
         let calculatedRoutes :: [CalculatedRoute] = testStuff windDirection
         render CalculateView {calculatedRoutes}
