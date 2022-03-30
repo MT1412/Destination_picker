@@ -1,0 +1,18 @@
+.welcomeContent {
+    color: var(--darkTextColor, #3a3a3a);
+    border: 3px solid var(--darkBlue, #080042);
+    background-color: var(--midGrey, #dcdce4);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+#submitbutton {
+    background-color: var(--primaryOrange, #f0790a);
+    border-radius: 3px;
+    color: var(--darkBlue);
+    border: 2px solid #080042;
+}
+
+#submitbutton:hover {
+    border-color: var(--lightBlue, #1da8db);
+}

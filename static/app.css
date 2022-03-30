@@ -1,0 +1,63 @@
+body, h1{
+    font-family: "montserrat";
+    font-weight: 300;
+    color: var(--darkTextColor, #3a3a3a);
+    background-color: var(--lightBlue, #1da8db);
+}
+
+.headerblock {
+    margin: 0px;
+    width: 100%;
+    position: relative;
+}
+
+.headermain {
+    margin: 0px;
+    width: 100%;
+    background-color: var(--darkBlue, #080042);
+    position: relative;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#headertitle {
+    background-color: var(--darkBlue);
+    color: var(--lightTextColor, #e2e2e2);
+    margin: 0px;
+    height: 150px;
+    padding: 45px;
+    /* float: left; */
+}
+
+#headerimg {
+    width: 20vw;
+    max-width: 200px;
+    background-color: var(--darkBlue);
+}
+
+.topwaveblock {
+    height: fit-content;
+    width: 100%;
+}
+
+#topwave {
+    width: 100%;
+    position: relative;
+}
+
+.mainBodyDiv {
+    position: relative;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    min-height: 80vh;
+    border-color: var(--primaryOrange, #f0790a);
+}
+
+#bottomwave {
+    width: 100%;
+    position: relative;
+}
