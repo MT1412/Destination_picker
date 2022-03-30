@@ -55,6 +55,17 @@ output winddir= map timeEstimate allRoutes where
 reverseOutput :: Int -> [Float]
 reverseOutput winddir = if winddir > 180 then output ((subtract 180) winddir) else output ((+180) winddir)
 
+type CalculatedRoute = (Float, Float, Float, Float) -- waytheretime, waybacktime, totaltime, lunchtime
+
+testStuff :: Int -> [CalculatedRoute]
+testStuff winddir = map calculateRoutes allRoutes where
+    calculateRoutes route = do
+        let waytheretime :: Float = sumRouteTime (routeTimes route winddir)
+        let waybacktime :: Float = if winddir > 180 then sumRouteTime (routeTimes route ((subtract 180) winddir)) else sumRouteTime (routeTimes route ((+180) winddir))
+        let totaltime :: Float = (+waybacktime) waytheretime
+        let lunchtime :: Float = (+9) waytheretime
+        (waytheretime, waybacktime, totaltime, lunchtime)
+
 -- DATA
 allRoutes :: [Route]
 allRoutes = [routeWoudsend, routeSloten, routeLangweer, routeJoure, routeSneek, routeHeeg]
