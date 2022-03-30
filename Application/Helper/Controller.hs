@@ -67,11 +67,11 @@ type CalculatedRoute = (String, Float, Float, Float, Float)
 testStuff :: Int -> [CalculatedRoute]
 testStuff winddir = map calculateRoutes allRouteData where
     calculateRoutes routeData = do
-        let routeName :: String = getRouteName routeData
-        let waytheretime :: Float = calcWayThereTime winddir (getRoute routeData)
-        let waybacktime :: Float = calcWayBackTime winddir (getRoute routeData)
-        let totaltime :: Float = (+waybacktime) waytheretime
-        let lunchtime :: Float = (+9) waytheretime -- TODO make this better.
+        let routeName = getRouteName routeData
+        let waytheretime = calcWayThereTime winddir (getRoute routeData)
+        let waybacktime = calcWayBackTime winddir (getRoute routeData)
+        let totaltime = (+waybacktime) waytheretime
+        let lunchtime = (+9) waytheretime -- TODO make this better.
         (routeName, waytheretime, waybacktime, totaltime, lunchtime)
 
 -- DATA
