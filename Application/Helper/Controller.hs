@@ -2,7 +2,14 @@ module Application.Helper.Controller where
 
 import IHP.ControllerPrelude
 -- Here you can add functions which are available in all your controllers
+type RouteData = (String, Route)
+getRouteName :: RouteData -> String
+getRouteName (routeName, _) = routeName
+getRoute :: RouteData -> Route
+getRoute (_, route) = route
+
 type Route = [Section]
+
 type Section = (String, Float, Int)
 getDistanceKM :: Section -> Float
 getDistanceKM (_, distanceKM, _) = distanceKM
@@ -48,27 +55,42 @@ routeTimes route winddir = map callSectionTime route where
 sumRouteTime :: [Float] -> Float
 sumRouteTime routeTimes = sum routeTimes
 
-output :: Int -> [Float]
-output winddir= map timeEstimate allRoutes where
-    timeEstimate route = sumRouteTime (routeTimes route winddir)
+calcWayThereTime :: Int -> Route -> Float
+calcWayThereTime winddir route = sumRouteTime (routeTimes route winddir)
 
-reverseOutput :: Int -> [Float]
-reverseOutput winddir = if winddir > 180 then output ((subtract 180) winddir) else output ((+180) winddir)
+calcWayBackTime :: Int -> Route -> Float
+calcWayBackTime winddir route = if winddir > 180 
+    then calcWayThereTime ((subtract 180) winddir) route 
+    else calcWayThereTime ((+180) winddir) route
 
-type CalculatedRoute = (Float, Float, Float, Float) -- waytheretime, waybacktime, totaltime, lunchtime
+type CalculatedRoute = (String, Float, Float, Float, Float) -- routename, waytheretime, waybacktime, totaltime, lunchtime
 
 testStuff :: Int -> [CalculatedRoute]
-testStuff winddir = map calculateRoutes allRoutes where
-    calculateRoutes route = do
-        let waytheretime :: Float = sumRouteTime (routeTimes route winddir)
-        let waybacktime :: Float = if winddir > 180 then sumRouteTime (routeTimes route ((subtract 180) winddir)) else sumRouteTime (routeTimes route ((+180) winddir))
+testStuff winddir = map calculateRoutes allRouteData where
+    calculateRoutes routeData = do
+        let routeName :: String = getRouteName routeData
+        let waytheretime :: Float = calcWayThereTime winddir (getRoute routeData)
+        let waybacktime :: Float = calcWayBackTime winddir (getRoute routeData)
         let totaltime :: Float = (+waybacktime) waytheretime
-        let lunchtime :: Float = (+9) waytheretime
-        (waytheretime, waybacktime, totaltime, lunchtime)
+        let lunchtime :: Float = (+9) waytheretime -- TODO make this better.
+        (routeName, waytheretime, waybacktime, totaltime, lunchtime)
 
 -- DATA
-allRoutes :: [Route]
-allRoutes = [routeWoudsend, routeSloten, routeLangweer, routeJoure, routeSneek, routeHeeg]
+allRouteData :: [RouteData]
+allRouteData = [woudsend, sloten, langweer, joure, sneek, heeg]
+
+woudsend :: RouteData
+woudsend = ("Woudsend", routeWoudsend)
+sloten :: RouteData
+sloten = ("Sloten", routeSloten)
+langweer :: RouteData
+langweer = ("Langweer", routeLangweer)
+joure :: RouteData
+joure = ("Joure", routeJoure)
+sneek :: RouteData
+sneek = ("Sneek", routeSneek)
+heeg :: RouteData
+heeg = ("Heeg", routeHeeg)
 
 routeWoudsend :: Route
 routeWoudsend = [ih1, kv1, we1, we2, wo1]
