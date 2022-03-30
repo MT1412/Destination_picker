@@ -6,13 +6,22 @@
     padding: 20px;
 }
 
-#submitbutton {
-    background-color: var(--primaryOrange, #f0790a);
+select {
+    height: 2rem;
+    width: 100px;
     border-radius: 3px;
-    color: var(--darkBlue);
+}
+
+#submitbutton {
+    height: 2rem;
+    width: 100px;
+    background-color: #f0790a;
+    border-radius: 3px;
+    color: #080042;
     border: 2px solid #080042;
+    font-weight: 600;
 }
 
 #submitbutton:hover {
-    border-color: var(--lightBlue, #1da8db);
+    background-color: #1da8db;
 }

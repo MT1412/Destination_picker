@@ -22,9 +22,6 @@ data CalculateView = CalculateView {calculatedRoutes :: [(String, Float, Float, 
 instance View CalculateView where
     html CalculateView {calculatedRoutes}= [hsx|
         <div>
-            <p>
-            Hi, these are your current time estimates in hours:
-            </p>
             <div>
                 {forEach calculatedRoutes renderRoute}
             </div>

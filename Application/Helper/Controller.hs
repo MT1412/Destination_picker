@@ -63,16 +63,30 @@ calcWayBackTime winddir route = if winddir > 180
     then calcWayThereTime ((subtract 180) winddir) route 
     else calcWayThereTime ((+180) winddir) route
 
+getBftTimeFactor :: Int -> Float
+getBftTimeFactor windStr = case windStr of 
+    1 -> 3
+    2 -> 2
+    3 -> 1.5
+    4 -> 1
+    5 -> 0.8
+    6 -> 0.7
+     -- TODO do this properly ~switch (inverted speedfactor)
+
 type CalculatedRoute = (String, Float, Float, Float, Float)
-testStuff :: Int -> [CalculatedRoute]
-testStuff winddir = map calculateRoutes allRouteData where
+output :: Int -> Int -> [CalculatedRoute]
+output winddir windStr = map calculateRoutes allRouteData where
     calculateRoutes routeData = do
+        let speedFactor = getBftTimeFactor windStr
         let routeName = getRouteName routeData
-        let waytheretime = calcWayThereTime winddir (getRoute routeData)
-        let waybacktime = calcWayBackTime winddir (getRoute routeData)
+        let waytheretime = (*speedFactor) (calcWayThereTime winddir (getRoute routeData)) 
+        let waybacktime = (*speedFactor) (calcWayBackTime winddir (getRoute routeData))
         let totaltime = (+waybacktime) waytheretime
-        let lunchtime = (+9) waytheretime -- TODO make this better.
+        let lunchtime = (+9.25) waytheretime
         (routeName, waytheretime, waybacktime, totaltime, lunchtime)
+
+-- TODO sort calculated routes by closest to 6.5h sail time. 
+-- TODO convert time values to readable time in hours:minutes.
 
 -- DATA
 allRouteData :: [RouteData]
