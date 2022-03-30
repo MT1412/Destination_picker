@@ -3,4 +3,25 @@
     border-radius: 12px;
     margin: 50px;
     padding: 20px;
+    color: #080042;
+}
+
+.routetitle {
+    margin-bottom: 10px;
+}
+
+.routeinfocontent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+p {
+    margin: 0px;
+}
+
+.routeimage {
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 50%;
 }
