@@ -1,6 +1,7 @@
 module Application.Helper.Controller where
 
 import IHP.ControllerPrelude
+import Data.Time
 -- Here you can add functions which are available in all your controllers
 type RouteData = (String, Route)
 getRouteName :: RouteData -> String
@@ -73,17 +74,28 @@ getBftTimeFactor windStr = case windStr of
     6 -> 0.79
     _ -> 1.00
 
-type CalculatedRoute = (String, Float, Float, Float, Float)
+floatToTime :: Float -> DiffTime -- in seconds
+floatToTime float = do
+    let seconds = round (float * 3600)
+    secondsToDiffTime seconds
+
+realtime :: DiffTime -> TimeOfDay
+realtime difference = timeToTimeOfDay difference
+
+convertToTime :: Float -> TimeOfDay
+convertToTime float = realtime (floatToTime float)
+
+type CalculatedRoute = (String, TimeOfDay, TimeOfDay, TimeOfDay, TimeOfDay)
 output :: Int -> Int -> [CalculatedRoute]
 output winddir windStr = map calculateRoutes allRouteData where
     calculateRoutes routeData = do
         let speedFactor = getBftTimeFactor windStr
         let routeName = getRouteName routeData
-        let waytheretime = (*speedFactor) (calcWayThereTime winddir (getRoute routeData)) 
+        let waytheretime = (*speedFactor) (calcWayThereTime winddir (getRoute routeData))
         let waybacktime = (*speedFactor) (calcWayBackTime winddir (getRoute routeData))
         let totaltime = (+waybacktime) waytheretime
         let lunchtime = (+9.25) waytheretime
-        (routeName, waytheretime, waybacktime, totaltime, lunchtime)
+        (routeName, convertToTime waytheretime, convertToTime waybacktime, convertToTime totaltime, convertToTime lunchtime)
 
 -- TODO sort calculated routes by closest to 6.5h sail time. 
 -- TODO convert time values to readable time in hours:minutes.

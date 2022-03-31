@@ -3,6 +3,7 @@ module Test.TestController where
 import Test.HUnit
     ( assertEqual, runTestTTAndExit, Counts, Test(TestList, TestCase) )
 import Application.Helper.Controller
+import Data.Time
 
 -- TODO add invalid input tests
 checkdifference :: Test
@@ -60,7 +61,7 @@ checkRouteTimes =
 checkSumRouteTimes :: Test
 checkSumRouteTimes =
     TestCase $ assertEqual [] 0.6 (sumRouteTime [0.2, 0.4])
-
+    
 -- checkOutput :: Test
 -- checkOutput =
 --     TestCase $ assertEqual [] 0.88333327 (output 65)
