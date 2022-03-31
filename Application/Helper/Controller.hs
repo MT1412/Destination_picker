@@ -1,8 +1,16 @@
 module Application.Helper.Controller where
 
 import IHP.ControllerPrelude
+import Data.Time
 -- Here you can add functions which are available in all your controllers
+type RouteData = (String, Route)
+getRouteName :: RouteData -> String
+getRouteName (routeName, _) = routeName
+getRoute :: RouteData -> Route
+getRoute (_, route) = route
+
 type Route = [Section]
+
 type Section = (String, Float, Int)
 getDistanceKM :: Section -> Float
 getDistanceKM (_, distanceKM, _) = distanceKM
@@ -20,11 +28,11 @@ getcourse :: Int -> Int
 getcourse absdifference = if absdifference > 180 then (subtract absdifference) 360 else absdifference
 
 matchspeed :: Int -> Float -- output speed in km/h
-matchspeed course =
-    if course < 30 then 3.2
-    else if course > 50 
-        then 6.0
-        else 5.0
+matchspeed course = if (course >= 60) then 5.0 else
+    if (course < 60 && course >= 50) then 4.6 else
+    if (course < 50 && course >= 40) then 4.0 else
+    if (course < 40 && course >= 30) then 3.3 
+    else 2.5
 
 getSpeed :: Int -> Int -> Float
 getSpeed winddir heading = do
@@ -48,16 +56,66 @@ routeTimes route winddir = map callSectionTime route where
 sumRouteTime :: [Float] -> Float
 sumRouteTime routeTimes = sum routeTimes
 
-output :: Int -> [Float]
-output winddir= map timeEstimate allRoutes where
-    timeEstimate route = sumRouteTime (routeTimes route winddir)
+calcWayThereTime :: Int -> Route -> Float
+calcWayThereTime winddir route = sumRouteTime (routeTimes route winddir)
 
-reverseOutput :: Int -> [Float]
-reverseOutput winddir = if winddir > 180 then output ((subtract 180) winddir) else output ((+180) winddir)
+calcWayBackTime :: Int -> Route -> Float
+calcWayBackTime winddir route = if winddir > 180 
+    then calcWayThereTime ((subtract 180) winddir) route 
+    else calcWayThereTime ((+180) winddir) route
+
+getBftTimeFactor :: Int -> Float
+getBftTimeFactor windStr = case windStr of 
+    1 -> 2.50
+    2 -> 1.52
+    3 -> 1.00
+    4 -> 0.86
+    5 -> 0.81
+    6 -> 0.79
+    _ -> 1.00
+
+floatToTime :: Float -> DiffTime -- in seconds
+floatToTime float = do
+    let seconds = round (float * 3600)
+    secondsToDiffTime seconds
+
+realtime :: DiffTime -> TimeOfDay
+realtime difference = timeToTimeOfDay difference
+
+convertToTime :: Float -> TimeOfDay
+convertToTime float = realtime (floatToTime float)
+
+type CalculatedRoute = (String, TimeOfDay, TimeOfDay, TimeOfDay, TimeOfDay)
+output :: Int -> Int -> [CalculatedRoute]
+output winddir windStr = map calculateRoutes allRouteData where
+    calculateRoutes routeData = do
+        let speedFactor = getBftTimeFactor windStr
+        let routeName = getRouteName routeData
+        let waytheretime = (*speedFactor) (calcWayThereTime winddir (getRoute routeData))
+        let waybacktime = (*speedFactor) (calcWayBackTime winddir (getRoute routeData))
+        let totaltime = (+waybacktime) waytheretime
+        let lunchtime = (+9.25) waytheretime
+        (routeName, convertToTime waytheretime, convertToTime waybacktime, convertToTime totaltime, convertToTime lunchtime)
+
+-- TODO sort calculated routes by closest to 6.5h sail time. 
+-- TODO convert time values to readable time in hours:minutes.
 
 -- DATA
-allRoutes :: [Route]
-allRoutes = [routeWoudsend, routeSloten, routeLangweer, routeJoure, routeSneek, routeHeeg]
+allRouteData :: [RouteData]
+allRouteData = [woudsend, sloten, langweer, joure, sneek, heeg]
+
+woudsend :: RouteData
+woudsend = ("Woudsend", routeWoudsend)
+sloten :: RouteData
+sloten = ("Sloten", routeSloten)
+langweer :: RouteData
+langweer = ("Langweer", routeLangweer)
+joure :: RouteData
+joure = ("Joure", routeJoure)
+sneek :: RouteData
+sneek = ("Sneek", routeSneek)
+heeg :: RouteData
+heeg = ("Heeg", routeHeeg)
 
 routeWoudsend :: Route
 routeWoudsend = [ih1, kv1, we1, we2, wo1]

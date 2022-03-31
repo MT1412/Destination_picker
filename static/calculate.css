@@ -1,0 +1,28 @@
+.routeinfoblock {
+    margin: 50px;
+    padding: 20px;
+    color: #080042;
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
+    background-color: rgba(255, 255, 255, .30);
+    backdrop-filter: blur(5px);
+}
+
+.routetitle {
+    margin-bottom: 10px;
+}
+
+.routeinfocontent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+p {
+    margin: 0px;
+}
+
+.routeimage {
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 50%;
+}

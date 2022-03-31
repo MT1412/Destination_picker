@@ -9,7 +9,7 @@ instance Controller StaticController where
     action WelcomeAction = render WelcomeView
 
     action CalculateAction = do
-        let windDirection :: Int = param "numberinput"
-        let wayThereValues :: [Float] = output windDirection
-        let wayBackValues :: [Float] = reverseOutput windDirection
-        render CalculateView {wayThereValues, wayBackValues}
+        let windDirection :: Int = param "winddirection"
+        let windStrength :: Int = param "windstrength"
+        let calculatedRoutes :: [CalculatedRoute] = output windDirection windStrength
+        render CalculateView {calculatedRoutes}

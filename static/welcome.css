@@ -1,0 +1,28 @@
+.welcomeContent {
+    margin: 50px;
+    padding: 20px;
+    color: #080042;
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
+    background-color: rgba(255, 255, 255, .30);
+    backdrop-filter: blur(5px);
+}
+
+select {
+    height: 2rem;
+    width: 100px;
+    border-radius: 3px;
+}
+
+#submitbutton {
+    height: 2rem;
+    width: 100px;
+    background-color: #f0790a;
+    border-radius: 3px;
+    color: #080042;
+    border: 2px solid #080042;
+    font-weight: 600;
+}
+
+#submitbutton:hover {
+    background-color: #1da8db;
+}

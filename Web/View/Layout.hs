@@ -18,12 +18,24 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     {stylesheets}
     {scripts}
 
-    <title>{pageTitleOrDefault "App"}</title>
+    <title>{pageTitleOrDefault "Destination picker"}</title>
 </head>
 <body>
-    <div class="container mt-4">
+    <div class="headerblock">
+        <div class="headermain">
+            <h1 id="headertitle">Where do we go today?</h1>
+            <img id="headerimg" src="/sailboat.svg">
+        </div>
+        <div class="topwaveblock">
+            <img id="topwave" src="/topWave.svg">
+        </div>
+    </div>
+    <div class="mainBodyDiv">
         {renderFlashMessages}
         {inner}
+    </div>
+    <div class="footer">
+        <img id="bottomwave" src="/bottomWave.svg">
     </div>
 </body>
 |]
@@ -37,6 +49,8 @@ stylesheets = [hsx|
         <link rel="stylesheet" href={assetPath "/vendor/bootstrap.min.css"}/>
         <link rel="stylesheet" href={assetPath "/vendor/flatpickr.min.css"}/>
         <link rel="stylesheet" href={assetPath "/app.css"}/>
+        <link rel="stylesheet" href={assetPath "/welcome.css"}/>
+        <link rel="stylesheet" href={assetPath "/calculate.css"}/>
     |]
 
 scripts :: Html
@@ -65,7 +79,7 @@ metaTags :: Html
 metaTags = [hsx|
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta property="og:title" content="App"/>
+    <meta property="og:title" content="Destination picker"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="TODO"/>
     <meta property="og:description" content="TODO"/>

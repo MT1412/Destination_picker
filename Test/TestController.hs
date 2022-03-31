@@ -3,6 +3,7 @@ module Test.TestController where
 import Test.HUnit
     ( assertEqual, runTestTTAndExit, Counts, Test(TestList, TestCase) )
 import Application.Helper.Controller
+import Data.Time
 
 -- TODO add invalid input tests
 checkdifference :: Test
@@ -27,40 +28,40 @@ checkCourseOver180 =
 
 checkSpeedMatchBeat :: Test
 checkSpeedMatchBeat =
-    TestCase $ assertEqual [] 3.2 (matchspeed 25)
+    TestCase $ assertEqual [] 2.5 (matchspeed 25)
 
 checkSpeedMatchUpwind :: Test
 checkSpeedMatchUpwind =
-    TestCase $ assertEqual [] 5.0 (matchspeed 40)
+    TestCase $ assertEqual [] 4.0 (matchspeed 40)
 
 checkSpeedMatchNormal :: Test
 checkSpeedMatchNormal =
-    TestCase $ assertEqual [] 6.0 (matchspeed 130)
+    TestCase $ assertEqual [] 5.0 (matchspeed 130)
 
 checkGetBeatSpeedFromInput :: Test
 checkGetBeatSpeedFromInput =
-    TestCase $ assertEqual [] 3.2 (getSpeed 90 95)
+    TestCase $ assertEqual [] 2.5 (getSpeed 90 95)
 
 checkGetUpwindSpeedFromInput :: Test
 checkGetUpwindSpeedFromInput =
-    TestCase $ assertEqual [] 5.0 (getSpeed 90 125)
+    TestCase $ assertEqual [] 3.3 (getSpeed 90 125)
 
 checkGetNormalSpeedFromInput :: Test
 checkGetNormalSpeedFromInput =
-    TestCase $ assertEqual [] 6.0 (getSpeed 90 270)
+    TestCase $ assertEqual [] 5.0 (getSpeed 90 270)
 
 checkSectionTime :: Test
 checkSectionTime =
-    TestCase $ assertEqual [] 0.2 (calcSectionTime 60 testSection1)
+    TestCase $ assertEqual [] 0.24000001 (calcSectionTime 60 testSection1)
 
 checkRouteTimes :: Test
 checkRouteTimes =
-    TestCase $ assertEqual [] [0.2, 0.4] (routeTimes testRoute 80)
+    TestCase $ assertEqual [] [0.24000001, 0.48000002] (routeTimes testRoute 80)
 
 checkSumRouteTimes :: Test
 checkSumRouteTimes =
-    TestCase $ assertEqual [] 0.6 (sumRouteTime [0.2, 0.4]) -- Apparently this is 0.6000000000000001
-
+    TestCase $ assertEqual [] 0.6 (sumRouteTime [0.2, 0.4])
+    
 -- checkOutput :: Test
 -- checkOutput =
 --     TestCase $ assertEqual [] 0.88333327 (output 65)
