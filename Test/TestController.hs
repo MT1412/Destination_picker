@@ -59,7 +59,7 @@ checkRouteTimes =
 
 checkSumRouteTimes :: Test
 checkSumRouteTimes =
-    TestCase $ assertEqual [] 0.6 (sumRouteTime [0.2, 0.4]) -- Apparently this is 0.6000000000000001
+    TestCase $ assertEqual [] 0.6 (sumRouteTime [0.2, 0.4])
 
 -- checkOutput :: Test
 -- checkOutput =

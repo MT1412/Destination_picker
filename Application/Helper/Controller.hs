@@ -27,11 +27,11 @@ getcourse :: Int -> Int
 getcourse absdifference = if absdifference > 180 then (subtract absdifference) 360 else absdifference
 
 matchspeed :: Int -> Float -- output speed in km/h
-matchspeed course =
-    if course < 30 then 3.2
-    else if course > 50 
-        then 6.0
-        else 5.0
+matchspeed course = if (course >= 60) then 5.0 else
+    if (course < 60 && course >= 50) then 4.6 else
+    if (course < 50 && course >= 40) then 4.0 else
+    if (course < 40 && course >= 30) then 3.3 
+    else 2.5
 
 getSpeed :: Int -> Int -> Float
 getSpeed winddir heading = do
@@ -65,13 +65,13 @@ calcWayBackTime winddir route = if winddir > 180
 
 getBftTimeFactor :: Int -> Float
 getBftTimeFactor windStr = case windStr of 
-    1 -> 3
-    2 -> 2
-    3 -> 1.5
-    4 -> 1
-    5 -> 0.8
-    6 -> 0.7
-     -- TODO do this properly ~switch (inverted speedfactor)
+    1 -> 2.50
+    2 -> 1.52
+    3 -> 1.00
+    4 -> 0.86
+    5 -> 0.81
+    6 -> 0.79
+    _ -> 1.00
 
 type CalculatedRoute = (String, Float, Float, Float, Float)
 output :: Int -> Int -> [CalculatedRoute]
