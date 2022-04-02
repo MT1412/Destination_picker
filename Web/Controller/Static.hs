@@ -11,5 +11,6 @@ instance Controller StaticController where
     action CalculateAction = do
         let windDirection :: Int = param "winddirection"
         let windStrength :: Int = param "windstrength"
-        let calculatedRoutes :: [CalculatedRoute] = output windDirection windStrength
+        let calculatedRoutes :: [CalculatedRoute] = sortedOutput windDirection windStrength
+        -- let calculatedRoutes :: [CalculatedRoute] = output windDirection windStrength
         render CalculateView {calculatedRoutes}
