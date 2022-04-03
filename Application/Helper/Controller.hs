@@ -79,11 +79,8 @@ floatToDiff float = do
     let seconds = round (float * 3600)
     secondsToDiffTime seconds
 
-diffToTime :: DiffTime -> TimeOfDay
-diffToTime difference = timeToTimeOfDay difference
-
 convertToTime :: Float -> TimeOfDay
-convertToTime float = diffToTime (floatToDiff float)
+convertToTime float = timeToTimeOfDay (floatToDiff float)
 
 type CalculatedRoute = (String, TimeOfDay, TimeOfDay, TimeOfDay, TimeOfDay)
 output :: Int -> Int -> [CalculatedRoute]
