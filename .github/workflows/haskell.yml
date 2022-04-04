@@ -34,7 +34,9 @@ jobs:
       
     # # Run tests
     - working-directory: ./
-      run: nix-shell --run "runghc Test/TestController.hs"
+      run: |
+        nix-shell --run "runghc Test/TestCalculation.hs"
+        nix-shell --run "runghc Test/TestController.hs"
 
     # Echo OK
     - working-directory: ./
