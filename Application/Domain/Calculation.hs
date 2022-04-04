@@ -79,3 +79,6 @@ floatToDiff float = do
 
 convertToTime :: Float -> TimeOfDay
 convertToTime float = timeToTimeOfDay (floatToDiff float)
+
+absDiff6_5Hours :: TimeOfDay -> DiffTime
+absDiff6_5Hours time= abs ((subtract 23400) (timeOfDayToTime time))
