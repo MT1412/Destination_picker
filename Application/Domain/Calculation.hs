@@ -19,7 +19,7 @@ absdifference winddir heading = abs ((subtract heading) winddir)
 
 getcourse :: Int -> Int
 getcourse absdifference
-    |(absdifference > 180) = (subtract absdifference) 360 
+    |(absdifference > 180) = (subtract absdifference) 360
     |otherwise = absdifference
 
 matchspeed :: Int -> Float -- output speed in km/h

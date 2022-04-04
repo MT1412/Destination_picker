@@ -1,8 +1,13 @@
-body, h1{
+body, h1 {
     font-family: "montserrat";
     font-weight: 300;
     color: var(--darkTextColor, #3a3a3a);
     background-color: var(--lightBlue, #1da8db);
+}
+
+::selection {
+    background-color: #080042;
+    color: #e2e2e2;
 }
 
 .headerblock {

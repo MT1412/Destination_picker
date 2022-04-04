@@ -23,7 +23,7 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
 <body>
     <div class="headerblock">
         <div class="headermain">
-            <h1 id="headertitle">Where do we go today?</h1>
+            <h1 id="headertitle">Where should we go today?</h1>
             <img id="headerimg" src="/sailboat.svg">
         </div>
         <div class="topwaveblock">
