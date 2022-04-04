@@ -74,16 +74,13 @@ getBftTimeFactor windStr = case windStr of
     6 -> 0.79
     _ -> 1.00
 
-floatToTime :: Float -> DiffTime -- in seconds
-floatToTime float = do
+floatToDiff :: Float -> DiffTime
+floatToDiff float = do
     let seconds = round (float * 3600)
     secondsToDiffTime seconds
 
-realtime :: DiffTime -> TimeOfDay
-realtime difference = timeToTimeOfDay difference
-
 convertToTime :: Float -> TimeOfDay
-convertToTime float = realtime (floatToTime float)
+convertToTime float = timeToTimeOfDay (floatToDiff float)
 
 type CalculatedRoute = (String, TimeOfDay, TimeOfDay, TimeOfDay, TimeOfDay)
 output :: Int -> Int -> [CalculatedRoute]
@@ -97,10 +94,17 @@ output winddir windStr = map calculateRoutes allRouteData where
         let lunchtime = (+9.25) waytheretime
         (routeName, convertToTime waytheretime, convertToTime waybacktime, convertToTime totaltime, convertToTime lunchtime)
 
--- TODO sort calculated routes by closest to 6.5h sail time. 
--- TODO convert time values to readable time in hours:minutes.
+absDiff6_5Hours :: TimeOfDay -> DiffTime
+absDiff6_5Hours time= abs ((subtract 23400) (timeOfDayToTime time))
 
--- DATA
+sortedOutput :: Int -> Int -> [CalculatedRoute]
+sortedOutput winddir windStr = do
+    let unsorted = output winddir windStr
+    sortBy fn unsorted where
+        fn = (\(_, _, _, a, _) (_, _, _, b, _) -> compare (absDiff6_5Hours a) (absDiff6_5Hours b))
+
+
+-- DATA FROM HERE
 allRouteData :: [RouteData]
 allRouteData = [woudsend, sloten, langweer, joure, sneek, heeg]
 
