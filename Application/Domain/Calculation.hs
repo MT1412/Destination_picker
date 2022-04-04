@@ -18,14 +18,17 @@ absdifference :: Int -> Int -> Int
 absdifference winddir heading = abs ((subtract heading) winddir)
 
 getcourse :: Int -> Int
-getcourse absdifference = if absdifference > 180 then (subtract absdifference) 360 else absdifference
+getcourse absdifference
+    |(absdifference > 180) = (subtract absdifference) 360 
+    |otherwise = absdifference
 
 matchspeed :: Int -> Float -- output speed in km/h
-matchspeed course = if (course >= 60) then 5.0 else
-    if (course < 60 && course >= 50) then 4.6 else
-    if (course < 50 && course >= 40) then 4.0 else
-    if (course < 40 && course >= 30) then 3.3 
-    else 2.5
+matchspeed course 
+    |(course < 30) = 2.5
+    |(course < 40 && course >= 30) = 3.3 
+    |(course < 50 && course >= 40) = 4.0
+    |(course < 60 && course >= 50) = 4.6
+    |otherwise = 5.0
 
 getSpeed :: Int -> Int -> Float
 getSpeed winddir heading = matchspeed (getcourse (absdifference winddir heading))
@@ -44,9 +47,9 @@ calcWayThereTime :: Int -> Route -> Float
 calcWayThereTime winddir route = sumRouteTime (routeTimes route winddir)
 
 calcWayBackTime :: Int -> Route -> Float
-calcWayBackTime winddir route = if winddir > 180 
-    then calcWayThereTime ((subtract 180) winddir) route 
-    else calcWayThereTime ((+180) winddir) route
+calcWayBackTime winddir route
+    |(winddir > 180) = calcWayThereTime ((subtract 180) winddir) route 
+    |otherwise = calcWayThereTime ((+180) winddir) route
 
 getBftTimeFactor :: Int -> Float
 getBftTimeFactor windStr = case windStr of 
