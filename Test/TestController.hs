@@ -125,6 +125,7 @@ checkGetRoute =
 -- checkOutput :: Test
 -- checkOutput =
 --     TestCase $ assertEqual [] (1) (output 90 2)
+
 -- output :: Int -> Int -> [CalculatedRoute]
 -- output winddir windStr = map calculateRoutes allRouteData where
 --     calculateRoutes routeData = do
@@ -142,6 +143,10 @@ checkAbsDiff6_5Hours7Hours =
 checkAbsDiff6_5Hours5Hours :: Test
 checkAbsDiff6_5Hours5Hours =
     TestCase $ assertEqual [] 5400 (absDiff6_5Hours (timeToTimeOfDay 18000))
+
+-- checkSortedOutput :: Test
+-- checkSortedOutput =
+--     TestCase $ assertEqual [] (1) (output 90 2)
 
 -- sortedOutput :: Int -> Int -> [CalculatedRoute]
 -- sortedOutput winddir windStr = do
@@ -195,7 +200,7 @@ main = runTestTTAndExit $ TestList [
     checkConvertToTime,
     checkGetRouteName,
     checkGetRoute,
-    -- checkOutput
+    -- checkOutput,
     checkAbsDiff6_5Hours7Hours,
     checkAbsDiff6_5Hours5Hours
     -- checkSortedOutput
