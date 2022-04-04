@@ -9,18 +9,13 @@ getRouteName (routeName, _) = routeName
 getRoute :: RouteData -> Route
 getRoute (_, route) = route
 
-
 getDistanceKM :: Section -> Float
 getDistanceKM (_, distanceKM, _) = distanceKM
 getHeading :: Section -> Int
 getHeading (_, _, heading) = heading
 
-winddirMinHeading :: Int -> Int -> Int
-winddirMinHeading winddir heading = (subtract heading) winddir
-
-absdifference :: Int -> Int
-absdifference winddirMinHeading = 
-    if (winddirMinHeading > 0) then winddirMinHeading else -winddirMinHeading
+absdifference :: Int -> Int -> Int
+absdifference winddir heading = abs ((subtract heading) winddir)
 
 getcourse :: Int -> Int
 getcourse absdifference = if absdifference > 180 then (subtract absdifference) 360 else absdifference
@@ -33,19 +28,10 @@ matchspeed course = if (course >= 60) then 5.0 else
     else 2.5
 
 getSpeed :: Int -> Int -> Float
-getSpeed winddir heading = do
-    let difference = winddirMinHeading winddir heading
-    let absdiff = absdifference difference
-    let course = getcourse absdiff
-    matchspeed course
+getSpeed winddir heading = matchspeed (getcourse (absdifference winddir heading))
 
 calcSectionTime :: Int -> Section -> Float
-calcSectionTime winddirection section = do
-    let heading = getHeading section
-    let speed = getSpeed winddirection heading
-    let distance = getDistanceKM section
-    let time = (/speed) distance
-    time
+calcSectionTime winddirection section = (/getSpeed winddirection (getHeading section)) (getDistanceKM section)
 
 routeTimes :: Route -> Int -> [Float]
 routeTimes route winddir = map callSectionTime route where
@@ -73,9 +59,7 @@ getBftTimeFactor windStr = case windStr of
     _ -> 1.00
 
 floatToDiff :: Float -> DiffTime
-floatToDiff float = do
-    let seconds = round (float * 3600)
-    secondsToDiffTime seconds
+floatToDiff float = secondsToDiffTime (round (float * 3600))
 
 convertToTime :: Float -> TimeOfDay
 convertToTime float = timeToTimeOfDay (floatToDiff float)

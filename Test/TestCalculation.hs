@@ -5,19 +5,12 @@ import Test.HUnit
 import Application.Domain.Calculation
 import Data.Time
 
-checkWinddirMinHeadingPositive :: Test
-checkWinddirMinHeadingPositive =
-  TestCase $ assertEqual [] 20 (winddirMinHeading 310 290)
-checkWinddirMinHeadingNegative :: Test
-checkWinddirMinHeadingNegative =
-  TestCase $ assertEqual [] (-20) (winddirMinHeading 290 310)
-
 checkabsdifferencePositive :: Test
 checkabsdifferencePositive =
-    TestCase $ assertEqual [] 60 (absdifference 60)
+    TestCase $ assertEqual [] 20 (absdifference 310 290)
 checkabsdifferenceNegative :: Test
 checkabsdifferenceNegative =
-    TestCase $ assertEqual [] 60 (absdifference (-60))
+    TestCase $ assertEqual [] 20 (absdifference 290 310)
 
 checkGetCourseSub180 :: Test
 checkGetCourseSub180 =
@@ -147,8 +140,6 @@ testRouteData = ("testRouteName", testRoute)
 
 main :: IO ()
 main = runTestTTAndExit $ TestList [
-    checkWinddirMinHeadingPositive,
-    checkWinddirMinHeadingNegative,
     checkabsdifferencePositive,
     checkabsdifferenceNegative,
     checkGetCourseSub180,
