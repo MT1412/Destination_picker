@@ -10,6 +10,17 @@ body, h1 {
     color: #e2e2e2;
 }
 
+a {
+    color: #080042;
+    text-decoration: underline;
+    text-underline-offset: 0.1em;
+    text-decoration-thickness: 1px;
+}
+
+a:hover {
+    color: #4a466c;
+}
+
 .headerblock {
     margin: 0px;
     width: 100%;

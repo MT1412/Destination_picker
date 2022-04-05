@@ -18,6 +18,16 @@ getLunchTime (_, _, _, _, lunchTime) = lunchTime
 getSrc :: RouteInfo -> String
 getSrc route = "/routeImages/" ++ (getRouteName route) ++ ".png"
 
+getLink :: String -> String
+getLink "Woudsend" = "http://dewatersport.nl/"
+getLink "Langweer" = "https://brasserieanders.nl/menu/"
+getLink "Joure" = "https://www.bistrofredjoure.nl/menukaart/lunch/"
+getLink "Sneek" = "https://www.dewalrus.nl/menukaart"
+getLink "Heeg" = "http://aldwal.nl/wp-content/uploads/2021/06/menukaarten-ald-wal.pdf"
+getLink "Sloten" = "https://restaurant7wouden.nl/wp-content/uploads/2022/03/lunchkaart-restaurant7wouden.pdf"
+getLink _ = ""
+
+
 data CalculateView = CalculateView {calculatedRoutes :: [(String, TimeOfDay, TimeOfDay, TimeOfDay, TimeOfDay)]}
 
 instance View CalculateView where
@@ -39,8 +49,10 @@ renderRoute route = [hsx|
                 <p>You will arrive there around {formatTime defaultTimeLocale "%H:%M" (getLunchTime route)}. </p>
                 <p>The way back will take {formatTime defaultTimeLocale "%H:%M" (getWayBackTime route)} hours. </p>
                 <p>The total sail time will be around {formatTime defaultTimeLocale "%H:%M" (getTotalSailTime route)} hours. </p>
+                <br />
+                <a target="_blank" rel="noreferrer noopener" href={getLink (getRouteName route)}>What's on the menu?</a>
             </div>
             <img class="routeimage" src={getSrc route}>
-        </div>   
+        </div>
     </div>
 |]
