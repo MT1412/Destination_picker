@@ -6,37 +6,33 @@ import Application.Helper.Controller
 import Application.Domain.Calculation
 import Data.Time
 
--- checkOutput :: Test
--- checkOutput =
---     TestCase $ assertEqual [] (1) (output 90 2)
+getTotalDiffTime :: CalculatedRoute -> DiffTime
+getTotalDiffTime (_, _, _, totalTime, _) = timeOfDayToTime totalTime
+getName :: CalculatedRoute -> String
+getName (name, _, _, _, _) = name
 
--- output :: Int -> Int -> [CalculatedRoute]
--- output winddir windStr = map calculateRoutes allRouteData where
---     calculateRoutes routeData = do
---         let speedFactor = getBftTimeFactor windStr
---         let routeName = getRouteName routeData
---         let waytheretime = (*speedFactor) (calcWayThereTime winddir (getRoute routeData))
---         let waybacktime = (*speedFactor) (calcWayBackTime winddir (getRoute routeData))
---         let totaltime = (+waybacktime) waytheretime
---         let lunchtime = (+9.25) waytheretime
---         (routeName, convertToTime waytheretime, convertToTime waybacktime, convertToTime totaltime, convertToTime lunchtime)
+reduceToNames :: [CalculatedRoute] -> [String]
+reduceToNames sortedoutput = map getName sortedoutput
+
+checkOutputWoudsend :: Test
+checkOutputWoudsend =
+    TestCase $ assertEqual [] 10697 (getTotalDiffTime (head (output 90 3)))
+checkOutputLangweer :: Test
+checkOutputLangweer =
+    TestCase $ assertEqual [] 18171 (getTotalDiffTime ((output 90 3)!!1))
 
 
--- checkSortedOutput :: Test
--- checkSortedOutput =
---     TestCase $ assertEqual [] (1) (output 90 2)
-
--- sortedOutput :: Int -> Int -> [CalculatedRoute]
--- sortedOutput winddir windStr = do
---     let unsorted = output winddir windStr
---     sortBy fn unsorted where
---         fn = (\(_, _, _, a, _) (_, _, _, b, _) -> compare (absDiff6_5Hours a) (absDiff6_5Hours b))
-
--- test data
--- end test data
+checkSortedOutputWest1 :: Test
+checkSortedOutputWest1 =
+    TestCase $ assertEqual [] ["Woudsend", "Langweer", "Sloten", "Heeg", "Joure", "Sneek"] (reduceToNames (sortedOutput 270 1))
+checkSortedOutputNorthEast2 :: Test
+checkSortedOutputNorthEast2 =
+    TestCase $ assertEqual [] ["Sloten","Heeg","Langweer","Joure","Sneek","Woudsend"] (reduceToNames (sortedOutput 45 2))
 
 main :: IO ()
 main = runTestTTAndExit $ TestList [
-    -- checkOutput,
-    -- checkSortedOutput
+    checkOutputWoudsend,
+    checkOutputLangweer,
+    checkSortedOutputWest1,
+    checkSortedOutputNorthEast2
     ]
