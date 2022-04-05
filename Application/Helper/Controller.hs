@@ -7,10 +7,11 @@ import Data.Time
 -- Here you can add functions which are available in all your controllers
 
 type CalculatedRoute = (String, TimeOfDay, TimeOfDay, TimeOfDay, TimeOfDay)
+
 output :: Int -> Int -> [CalculatedRoute]
 output winddir windStr = map calculateRoutes allRouteData where
     calculateRoutes routeData = do
-        let speedFactor = getBftTimeFactor windStr
+        let speedFactor = getBftTimeFactor windStr -- put in calcWayThere & calcWayBack?
         let routeName = getRouteName routeData
         let waytheretime = (*speedFactor) (calcWayThereTime winddir (getRoute routeData))
         let waybacktime = (*speedFactor) (calcWayBackTime winddir (getRoute routeData))
@@ -18,11 +19,6 @@ output winddir windStr = map calculateRoutes allRouteData where
         let lunchtime = (+9.25) waytheretime
         (routeName, convertToTime waytheretime, convertToTime waybacktime, convertToTime totaltime, convertToTime lunchtime)
 
-absDiff6_5Hours :: TimeOfDay -> DiffTime
-absDiff6_5Hours time= abs ((subtract 23400) (timeOfDayToTime time))
-
 sortedOutput :: Int -> Int -> [CalculatedRoute]
-sortedOutput winddir windStr = do
-    let unsorted = output winddir windStr
-    sortBy fn unsorted where
-        fn = (\(_, _, _, a, _) (_, _, _, b, _) -> compare (absDiff6_5Hours a) (absDiff6_5Hours b))
+sortedOutput winddir windStr = sortBy sort (output winddir windStr) where
+        sort = (\(_, _, _, a, _) (_, _, _, b, _) -> compare (absDiff6_5Hours a) (absDiff6_5Hours b))

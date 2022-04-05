@@ -22,7 +22,23 @@ p {
 }
 
 .routeimage {
-    min-width: 200px;
-    min-height: 200px;
-    max-width: 50%;
+    width: 50%;
+}
+
+@media screen and (max-width: 750px) {
+    .routeinfocontent {
+      flex-direction: column;
+    }
+
+    .routeimage {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+    .routeinfoblock {
+        margin: 30px;
+    }
 }

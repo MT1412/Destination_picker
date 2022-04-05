@@ -1,8 +1,24 @@
-body, h1{
+body, h1 {
     font-family: "montserrat";
     font-weight: 300;
     color: var(--darkTextColor, #3a3a3a);
     background-color: var(--lightBlue, #1da8db);
+}
+
+::selection {
+    background-color: #080042;
+    color: #e2e2e2;
+}
+
+a {
+    color: #080042;
+    text-decoration: underline;
+    text-underline-offset: 0.1em;
+    text-decoration-thickness: 1px;
+}
+
+a:hover {
+    color: #4a466c;
 }
 
 .headerblock {
@@ -53,7 +69,7 @@ body, h1{
     margin-right: 10vw;
     margin-top: 100px;
     margin-bottom: 50px;
-    min-height: 80vh;
+    min-height: calc(100vh - 150px - (100vw * 325 / 1440));
     border-color: var(--primaryOrange, #f0790a);
 }
 
@@ -61,3 +77,28 @@ body, h1{
     width: 100%;
     position: relative;
 }
+
+@media screen and (max-width: 950px) {
+    .mainBodyDiv {
+      margin: 0px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    body{
+      font-size: smaller;
+    }
+    h2 {
+        font-size: medium;
+    }
+    h1 {
+        font-size: large;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    body{
+      font-size: x-small;
+    }
+}
+
