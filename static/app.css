@@ -58,7 +58,7 @@ body, h1 {
     margin-right: 10vw;
     margin-top: 100px;
     margin-bottom: 50px;
-    min-height: 80vh;
+    min-height: calc(100vh - 150px - (100vw * 325 / 1440));
     border-color: var(--primaryOrange, #f0790a);
 }
 
