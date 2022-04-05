@@ -32,9 +32,9 @@ instance View CalculateView where
 renderRoute :: RouteInfo -> Html
 renderRoute route = [hsx|
     <div class="routeinfoblock">
-        <h2 class="routetitle">{getRouteName route}</h2>
         <div class="routeinfocontent">
             <div class="routeinfotext">
+                <h2 class="routetitle">{getRouteName route}</h2>
                 <p>The way there will take {formatTime defaultTimeLocale "%H:%M" (getWayThereTime route)} hours. </p>
                 <p>You will arrive there around {formatTime defaultTimeLocale "%H:%M" (getLunchTime route)}. </p>
                 <p>The way back will take {formatTime defaultTimeLocale "%H:%M" (getWayBackTime route)} hours. </p>
