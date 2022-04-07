@@ -10,7 +10,7 @@ At the moment only the effects from wind direction vs heading, wind strength and
 - The input wind strength produces a correction factor for the estimated time.
 
 
-the app is available here: https://kgrrfyktgovkzazshtdxmdxafivsprqi.ihpapp.com/
+the app is available here: https://destinationpicker.ihpapp.com/
 
 
 ## Install dependencies
