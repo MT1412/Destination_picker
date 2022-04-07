@@ -1,53 +1,42 @@
-# Haskell (Community)
+# Destination picker
 
-_This definition will hopefully get you going quickly with Haskell running as a remote container in vscode_
+This app calculates the best destination for your day trip, sailing from Idskenhuizen. Based on the (input) wind forecast, the sail time to each destination is estimated. Then whichever route time is closest to 6:30h sail time is considered the best destination for the day.
+The routes to pick from are shown in the image below. Destinations are: Woudsend, Langweer, Sloten, Heeg, Joure and Sneek. 
 
-## Summary
+<img src="static/routeImages/Allroutes.png" />
 
-[Haskell](https://www.haskell.org/) is an advanced, purely functional programming language
-
-
-| Metadata                    | Value                                                                        |
-|---------------------------- | -----------------------------------------------------------------------------|
-| *Contributors*              | [Stuart Pike](https://github.com/stuartpike), [Javier Neira](https://github.com/jneira), [eitsupi](https://github.com/eitsupi) |
-| *Categories*                | Community, Haskell |
-| *Definition type*           | Dockerfile |
-| *Works in Codespaces*       | Yes |
-| *Container host OS support* | Linux, macOS, Windows |
-| *Container OS*              | Debian |
-| *Languages, platforms*      | Haskell |
+At the moment only the effects from wind direction vs heading, wind strength and distance are implemented.
+- The angle between the input wind direction and heading per section produce a base speed.
+- The input wind strength produces a correction factor for the estimated time.
 
 
-## Using this definition
-
-While the definition itself works unmodified, you can select the version of Haskell the container uses by updating the `VARIANT` arg in the included `.devcontainer/devcontainer.json` file.
-
-```json
-"build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-        "VARIANT": "9"
-    }
-}
-```
-
-### Adding the definition to a project or codespace
-
-1. If this is your first time using a development container, please see getting started information on [setting up](https://aka.ms/vscode-remote/containers/getting-started) Remote-Containers or [creating a codespace](https://aka.ms/ghcs-open-codespace) using GitHub Codespaces.
-
-2. Start VS Code and open your project folder or connect to a codespace.
-
-3. Press <kbd>F1</kbd> select and **Add Development Container Configuration Files...** command for **Remote-Containers** or **Codespaces**.
-
-   > **Note:** If needed, you can drag-and-drop the `.devcontainer` folder from this sub-folder in a locally cloned copy of this repository into the VS Code file explorer instead of using the command.
-
-4. Select this definition. You may also need to select **Show All Definitions...** for it to appear.
-
-5. Finally, press <kbd>F1</kbd> and run **Remote-Containers: Reopen Folder in Container** or **Codespaces: Rebuild Container** to start using the definition.
+the app is available here: https://destinationpicker.ihpapp.com/
 
 
-## License
+## Install dependencies
 
-Copyright (c) Microsoft Corporation. All rights reserved.
+Option 1: Open the project in the remote container, containing the necessary Haskell tools: GHC, Cabal, Stack and the Haskell language server extension. Container OS: Debian.
+Option 2: Install the haskell tools manually.
 
-Licensed under the MIT License. See [LICENSE](https://github.com/Microsoft/vscode-dev-containers/blob/main/LICENSE).
+### Nix package manager
+Install nix, following the instructions here: https://ihp.digitallyinduced.com/Guide/installation.html.
+
+### IHP and dependencies
+running the app for the first time will install the rest of the dependencies. This will take around 15m and may or may not work.
+running nix-build, and the tests in nix-shell does work.
+Alternatively start with a new IHP project and copy in the files. 
+
+
+## Run
+
+### Running unit tests
+To run the domain unit tests, from the root folder, run:
+- `runghc Test/TestController.hs`
+- `runghc Test/TestCalculation.hs`
+
+### Running the application
+To run the application, run `./start` from the root folder. 
+By default the app will be available on port 8000, IHP IDE on port 8001.
+
+### Pipeline
+On each commit the CI pipeline builds the application and runs the unit tests. If either fails, merge commits will be blocked.
