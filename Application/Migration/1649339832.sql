@@ -1,0 +1,13 @@
+ALTER TABLE bridges ADD COLUMN section_id UUID NOT NULL;
+ALTER TABLE restaurants ADD COLUMN destination_id UUID NOT NULL;
+ALTER TABLE route ADD COLUMN destination_id UUID NOT NULL;
+ALTER TABLE route ADD COLUMN section_id UUID[] DEFAULT '{}' NOT NULL;
+ALTER TABLE sections ADD COLUMN name TEXT NOT NULL;
+CREATE INDEX route_destination_id_index ON route (destination_id);
+CREATE INDEX restaurants_destination_id_index ON restaurants (destination_id);
+CREATE INDEX bridges_section_id_index ON bridges (section_id);
+CREATE INDEX route_section_id_index ON route (section_id);
+ALTER TABLE bridges ADD CONSTRAINT bridges_ref_section_id FOREIGN KEY (section_id) REFERENCES sections (id) ON DELETE NO ACTION;
+ALTER TABLE restaurants ADD CONSTRAINT restaurants_ref_destination_id FOREIGN KEY (destination_id) REFERENCES destinations (id) ON DELETE NO ACTION;
+ALTER TABLE route ADD CONSTRAINT route_ref_destination_id FOREIGN KEY (destination_id) REFERENCES destinations (id) ON DELETE NO ACTION;
+ALTER TABLE route ADD CONSTRAINT route_ref_section_id FOREIGN KEY (section_id) REFERENCES sections (id) ON DELETE NO ACTION;
